@@ -35,3 +35,18 @@ else:
 print('Starting Azure DevOps Project creation with the following options: ')
 print('Token: ', options.token)
 print('Organization: ', organization_url)
+
+# Create a connection
+credentials = BasicAuthentication('', options.token)
+connection = Connection(base_url=organization_url, creds=credentials)
+
+# Get a client
+core_client = connection.clients.get_core_client()
+
+# Get a list of the projects in the org
+projects = core_client.get_projects()
+
+# Show projects
+for project in projects:
+    pprint.pprint(project.__dict__)
+

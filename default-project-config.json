@@ -1,0 +1,12 @@
+{
+    "name": "MyTestADOProject",
+    "description": "POC project for testing automated project deployment",
+    "capabilities": {
+        "versioncontrol": {
+            "sourceControllerType": "Git"
+        },
+        "processTemplate": {
+            "templateTypeId": "6b724908-ef14-45cf-84f8-768b5384da45"
+        }
+    }
+}
