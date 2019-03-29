@@ -5,7 +5,7 @@ from msrest.authentication import BasicAuthentication
 import pprint
 import optparse
 
-# Get PAT from user input 
+# Get PAT from user input
 parser = optparse.OptionParser()
 
 parser.add_option('-t', '--token',
