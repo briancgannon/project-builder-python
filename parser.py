@@ -8,7 +8,7 @@ parser.add_option('-t', '--token',
     action="store", dest="token",
     help="token string", default="DefaultTokenString")
 
-options, args = parser.parse_args()
+(options, args) = parser.parse_args()
 
 # Require PAT
 if not options.token:
