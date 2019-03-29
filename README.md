@@ -1,2 +1,6 @@
 # project-builder-python
-POC work for an automated ADO project builder.
+POC work for automated ADO project creation
+
+### Requirements
+ - Azure Devops Account with like permissions and stuff
+ - Personal Access Token
