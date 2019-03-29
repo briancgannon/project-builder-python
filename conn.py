@@ -10,7 +10,12 @@ parser = optparse.OptionParser()
 
 parser.add_option('-t', '--token',
     action="store", dest="token",
-    help="token string", default="DefaultTokenString")
+    help="token string", default="DefaultPersonalAccessToken")
+
+parser.add_option('-o', '--organization',
+    action="store", dest="organization",
+    help="organization string", default="DefaultAzureDevopsOrganizationg")
+
 
 options, args = parser.parse_args()
 
@@ -18,7 +23,11 @@ options, args = parser.parse_args()
 if not options.token:
     parser.error('Please provide your Azure DevOps Personal Access Token')
 
+elif not options.organization:
+    parser.error('Please provide the target Azure DevOps Organization')
+
 print('Token: ', options.token)
+print('Organization: ', options.organization)
 
 
 
