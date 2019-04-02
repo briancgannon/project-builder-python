@@ -39,5 +39,5 @@ projects = core_client.get_projects()
 
 # Show projects
 for project in projects:
-    pprint.pprint(project.__dict__)
+    pprint.pprint(project.name)
 

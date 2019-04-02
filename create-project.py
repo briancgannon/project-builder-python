@@ -43,10 +43,11 @@ connection = Connection(base_url=organization_url, creds=credentials)
 # Get a client
 core_client = connection.clients.get_core_client()
 
-# Get a list of the projects in the org
+# Get new project name
+new_project = input("Input new project name: ")
+
 projects = core_client.get_projects()
 
-# Show projects
-for project in projects:
-    pprint.pprint(project.__dict__)
-
+if new_project not in projects.name:
+    # create new project
+    core_client.create_project(organization=options.organization, name=new_project)
