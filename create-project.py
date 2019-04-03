@@ -41,13 +41,25 @@ credentials = BasicAuthentication('', options.token)
 connection = Connection(base_url=organization_url, creds=credentials)
 
 # Get a client
-core_client = connection.clients.get_core_client()
+#core_client = connection.clients.get_core_client()
 
 # Get new project name
 new_project = input("Input new project name: ")
 
-projects = core_client.get_projects()
+def get_project_names():
+    core_client = connection.clients.get_core_client()
+    return (project.name for project in core_client.get_projects())
 
-if new_project not in projects.name:
-    # create new project
-    core_client.create_project(organization=options.organization, name=new_project)
+projects = get_project_names()
+
+for project in projects:
+    if new_project == project:
+        name_taken = True
+    else:
+        name_taken = False
+
+if name_taken != True:
+    print("Creating new project: " + new_project)
+    
+else:
+    print("Project name is use. Exiting.")
