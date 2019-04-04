@@ -6,7 +6,7 @@ import os
 
 organization_url = 'https://dev.azure.com/gannonbrian'
 personal_access_token = os.getenv('AZURE_DEVOPS_PAT')
-my_project_name = "project-builder"
+my_project_name = "test-project"
 
 # ADO stuff
 credentials = BasicAuthentication('', personal_access_token)
@@ -27,7 +27,7 @@ def check_project_name_availability(name):
 
 def create_ado_project(name):
     core_client = connection.clients.get_core_client()
-    core_client.c
+    core_client.queue_create_project(name)
 
 project_name = check_project_name_availability(my_project_name)
 create_ado_project(project_name)
