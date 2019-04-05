@@ -31,3 +31,12 @@ while True:
     my_status = get_project_state(my_id)
     if my_status == 'wellFormed':
         break
+
+
+
+######
+
+class project(object):
+    def __init__(self, project_name, project_description):
+        self.project_name = project_name
+        self.project_description = project_description
