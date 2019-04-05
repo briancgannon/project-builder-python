@@ -3,7 +3,7 @@ from msrest.authentication import BasicAuthentication
 import pprint
 
 # Fill in with your personal access token and org URL
-personal_access_token = 'x3swuqigmlncn4ij3idabxkjbpby4wa735txykltqtzsif52xjna'
+personal_access_token = ''
 organization_url = 'https://dev.azure.com/gannonbrian'
 
 # Create a connection to the org
