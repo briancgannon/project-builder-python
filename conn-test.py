@@ -1,9 +1,10 @@
 from azure.devops.connection import Connection
 from msrest.authentication import BasicAuthentication
 import pprint
+import os
 
 # Fill in with your personal access token and org URL
-personal_access_token = ''
+personal_access_token = os.getenv('AZURE_DEVOPS_PAT')
 organization_url = 'https://dev.azure.com/gannonbrian'
 
 # Create a connection to the org
