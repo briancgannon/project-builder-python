@@ -14,6 +14,10 @@ connection = Connection(base_url=organization_url, creds=credentials)
 
 def create_ado_project(name):
     core_client = connection.clients.get_core_client()
-    core_client.queue_create_project(project_to_create=name)
+    # TODO:  pass in working response body
+    core_client.queue_create_project(abbreviation="MTP",
+        capabilities={
+            
+        }
 
 create_ado_project(my_project_name)
