@@ -2,63 +2,56 @@
 
 from azure.devops.connection import Connection
 from msrest.authentication import BasicAuthentication
-import optparse
+import json
+import os
+import requests
 
-parser = optparse.OptionParser()
+organization_url = 'https://dev.azure.com/gannonbrian'
+personal_access_token = os.getenv('AZURE_DEVOPS_PAT')
+my_project_name = "test-project"
+my_project_description = "This is garbage."
 
-parser.add_option("-d", "--dry-run",
-    action="store", dest="dry-run",
-    help="perform dry-run. default=false", default=False)
-
-parser.add_option("-t", "--token",
-    action="store", dest="token",
-    help="ADO Personal Access Token")
-
-parser.add_option("-o", "--organization",
-    action="store", dest="organization",
-    help="ADO organization")
-
-(options, args) = parser.parse_args()
-
-if not options.token:
-    parser.error('Please provide an Azure DevOps Personal Access Token')
-elif not options.organization:
-    parser.error('Please provide an Azure DevOps Organization')
-
-if options.organization:
-    organization_url = 'https://dev.azure.com/' + options.organization
-else:
-    organization_url = 'https://dev.azure.com/'
-
-
-print('Starting Azure DevOps Project creation with the following options: ')
-print('Token: ', options.token)
-print('Organization: ', organization_url)
-
-# Create a connection
-credentials = BasicAuthentication('', options.token)
+# ADO stuff
+credentials = BasicAuthentication('', personal_access_token)
 connection = Connection(base_url=organization_url, creds=credentials)
+core_client = connection.clients.get_core_client()
 
-# Get a client
-#core_client = connection.clients.get_core_client()
+def create_project(name, description):
+    core_client.queue_create_project(name=name,
+        description=description,
+        )
 
-# Get new project name
-new_project = input("Input new project name: ")
+# Get project ID and check for creation status
+def get_project_id(name):
+    projects = core_client.get_projects()
+    for project in projects:
+        if name == project.name:
+            project_name_found = True
+            return project.id
+        else:
+            project_name_found = False
 
-def get_project_names():
-    core_client = connection.clients.get_core_client()
-    return (project.name for project in core_client.get_projects())
+    if project_name_found == False:
+        raise ValueError("ERROR: Project name not found in current projects.")
 
-projects = get_project_names()
+def get_project_state(project_id):
+    projects = core_client.get_projects()
+    for project in projects:
+        if project_id == project.id:
+            project_id_found = True
+            return project.state
+        else:
+            project_id_found = False
 
-for project in projects:
-    if new_project == project:
-        name_taken = True
-    else:
-        name_taken = False
+    if project_id_found == False:
+        raise ValueError("ERROR: Unable to return project state from current projects.")
 
-if name_taken != True:
-    print("Creating new project: " + new_project)
-    
-else:
-    print("Project name is use. Exiting.")
+my_id = get_project_id(my_project_name)
+my_status = get_project_state(my_id)
+
+# wait until project creation is complete
+while True:
+    my_status = get_project_state(my_id)
+    if my_status == 'wellFormed':
+        break
+
