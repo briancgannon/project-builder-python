@@ -15,9 +15,9 @@ my_project_description = "This is garbage."
 # ADO stuff
 credentials = BasicAuthentication('', personal_access_token)
 connection = Connection(base_url=organization_url, creds=credentials)
+core_client = connection.clients.get_core_client()
 
 def create_ado_project(id, name, description):
-    core_client = connection.clients.get_core_client()
     core_client.queue_create_project(abbreviation="MTP",
         description="Test Project",
         name="test-project",
@@ -26,7 +26,19 @@ def create_ado_project(id, name, description):
             'version-control':'git'}
             )
 
-# TODO: Until create status = wellFormed
-resp = requests.get('https://dev.azure.com/gannonbrian/_apis/operations/tp-01/?api-version=5.0')
-create_ado_project(my_project_id, my_project_name, my_project_description)
+# Get project ID and check for creation status
+def get_project_id(name):
+    projects = core_client.get_projects()
+    for project in projects:
+        if name == project.name:
+            return project.id
+
+def get_project_status(project_id):
+    projects = core_client.get_projects()
+    for project in projects:
+        if project_id == project.id:
+            return project.status
+
+my_id = get_project_id(my_project_name)
+my_status = get_project_status(my_id)
 
