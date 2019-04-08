@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-# Safely run automated Terraform commands and capture stdout
-# Additionally, you can set TF logging ENV VARs:
+# Safely run automated Terraform commands and capture stdout,stderr
+# Additionally, set TF logging ENV VARs:
 # TF_LOG_PATH = desired log path
 # TF_LOG = TRACE, DEBUG, INFO, WARN or ERRO
 
@@ -23,4 +23,15 @@ def run_command(cmd):
     return ''.join(stdout)
 
 # TODO: add terraform command options: init, plan, apply
-run_command(tf_cmd)
+
+# TF init
+tf_init = tf_cmd + "init -input=false"
+run_command(tf_init)
+
+# TF plan
+tf_plan = tf_cmd + "plan -out=tfplan -input=false"
+run_command(tf_plan)
+
+# TF apply
+tf_apply = tf_cmd + "apply -input=false tfplan"
+run_command(tf_apply)
