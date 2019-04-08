@@ -1,6 +1,7 @@
 {
-    "name": "MyTestADOProject",
+    "name": "my-test-project",
     "description": "POC project for testing automated project deployment",
+    "abbreviation": "mtp",
     "capabilities": {
         "versioncontrol": {
             "sourceControllerType": "Git"
