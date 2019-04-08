@@ -1,20 +1,19 @@
+#!/usr/bin/env python3
+
 from azure.devops.connection import Connection
 from msrest.authentication import BasicAuthentication
 import pprint
 import os
 
-# Fill in with your personal access token and org URL
+# ADO -> User -> Security -> Create Personal Access Token
 personal_access_token = os.getenv('AZURE_DEVOPS_PAT')
-organization_url = 'https://dev.azure.com/gannonbrian'
+organization_url = 'https://dev.azure.com/developertown'
 
 # Create a connection to the org
 credentials = BasicAuthentication('', personal_access_token)
 connection = Connection(base_url=organization_url, creds=credentials)
 
-# Get a client (the "core" client provides access to projects, teams, etc)
 core_client = connection.clients.get_core_client()
-
-# Get the list of projects in the org
 projects = core_client.get_projects()
 
 # Show details about each project in the console
