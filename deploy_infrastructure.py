@@ -9,7 +9,6 @@ import subprocess
 import shutil
 
 tf_cmd = shutil.which("terraform")
-tf_options = ['init', 'plan', 'apply']
 
 def run_command(cmd):
     pipe = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -21,8 +20,6 @@ def run_command(cmd):
         if line == '' and pipe.poll() != None:
             break
     return ''.join(stdout)
-
-# TODO: add terraform command options: init, plan, apply
 
 # TF init
 tf_init = tf_cmd + "init -input=false"
