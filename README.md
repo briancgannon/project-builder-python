@@ -18,7 +18,7 @@ Internal DevOps tool for automated deploy of new development projects and resour
 
 #### Project Config
 - See `default-project-config.json` in project root dir
-- 
+-
 
 #### Project Create
 - REQUIRED: name
