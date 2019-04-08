@@ -16,6 +16,8 @@ logger = logging.getLogger(__name__)
 organization_url = 'https://dev.azure.com/gannonbrian'
 personal_access_token = os.getenv('AZURE_DEVOPS_PAT')
 project_name = "test-project"
+
+# TODO: Fix this
 project_params = {'name': project_name}
 
 # Azure Devops connection
@@ -52,17 +54,18 @@ def create_project(project):
         project = core_client.queue_create_project(project)
 
 try:
+    # TODO: Fix this
     create_project(project_params)
 except Exception as error:
     logger.exception(error)
 
-#new_project_id = get_project_id(project_name)
-#new_project_status = get_project_state(new_project_id)
+new_project_id = get_project_id(project_name)
+new_project_status = get_project_state(new_project_id)
 
 # wait until project creation is complete
-#while True:
-#    my_status = get_project_state(new_project_id)
-#    if my_status == 'wellFormed':
-#        break
+while True:
+    my_status = get_project_state(new_project_id)
+    if my_status == 'wellFormed':
+        break
 
 
