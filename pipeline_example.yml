@@ -1,0 +1,14 @@
+steps:
+- task: HelmDeploy@0
+  displayName: 'helm upgrade api'
+  inputs:
+    connectionType: 'Kubernetes Service Connection'
+    kubernetesServiceConnection: 'IPN EKS Cluster'
+    namespace: dev
+    command: upgrade
+    chartType: FilePath
+    chartPath: '$(System.DefaultWorkingDirectory)/_IPN - Flight Plans-CI/deployment/charts/webapi'
+    releaseName: eedevapi
+    overrideValues: 'image=074479307018.dkr.ecr.us-east-1.amazonaws.com/easyeapis/api:$(Build.BuildId)'
+    valueFile: '$(System.DefaultWorkingDirectory)/_IPN - Flight Plans-CI/deployment/ci/values/api-server.yaml'
+    tillerNamespace: operations
